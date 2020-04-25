@@ -1,0 +1,55 @@
+--------------------------------------------------------------------------------
+  autograd profiler output (CUDA mode)
+--------------------------------------------------------------------------------
+        top 15 events sorted by cpu_time_total
+
+        Because the autograd profiler uses the CUDA event API,
+        the CUDA time column reports approximately max(cuda_time, cpu_time).
+        Please ignore this output if your code does not use CUDA.
+
+-----------------  ---------------  ---------------  ---------------  ---------------  ---------------
+Name                      CPU time        CUDA time            Calls        CPU total       CUDA total
+-----------------  ---------------  ---------------  ---------------  ---------------  ---------------
+masked_select         603975.106us         93.750us                1     603975.106us         93.750us
+masked_select         603053.607us        109.375us                1     603053.607us        109.375us
+masked_select         603003.156us        500.000us                1     603003.156us        500.000us
+masked_select         602775.638us        109.375us                1     602775.638us        109.375us
+masked_select         602719.401us         93.750us                1     602719.401us         93.750us
+masked_select         602346.167us        109.375us                1     602346.167us        109.375us
+masked_select         602196.792us        781.250us                1     602196.792us        781.250us
+masked_select         602160.712us        835.938us                1     602160.712us        835.938us
+masked_select         602148.796us        109.375us                1     602148.796us        109.375us
+masked_select         602050.471us        109.375us                1     602050.471us        109.375us
+masked_select         601717.031us        460.938us                1     601717.031us        460.938us
+masked_select         601349.409us        101.562us                1     601349.409us        101.562us
+masked_select         601249.487us        101.562us                1     601249.487us        101.562us
+masked_select         601242.342us        515.625us                1     601242.342us        515.625us
+masked_select         601085.624us         93.750us                1     601085.624us         93.750us
+
+
+Unable to fetch
+--------------------------------------------------------------------------------
+  cProfile output
+--------------------------------------------------------------------------------
+         1227159 function calls (1202212 primitive calls) in 332.864 seconds
+
+   Ordered by: internal time
+   List reduced from 6010 to 15 due to restriction <15>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      640  269.353    0.421  269.353    0.421 {built-in method torch_cluster.knn_cuda.knn}
+       64   45.163    0.706   45.163    0.706 {method 'run_backward' of 'torch._C._EngineBase' objects}
+      768   11.771    0.015   11.833    0.015 /home/jelmer/anaconda3/envs/torch3/lib/python3.6/site-packages/torch_geometric/utils/scatter.py:4(scatter_)
+      790    2.220    0.003    2.220    0.003 {method 'to' of 'torch._C._TensorBase' objects}
+      408    1.655    0.004    1.655    0.004 {method 'item' of 'torch._C._TensorBase' objects}
+        4    0.298    0.075  329.981   82.495 src/trainer/trainer.py:31(_train_epoch)
+        4    0.262    0.066  142.103   35.526 src/trainer/trainer.py:119(_valid_epoch)
+     1920    0.247    0.000    0.247    0.000 {built-in method addmm}
+     1792    0.087    0.000    0.087    0.000 {built-in method cat}
+     1115    0.075    0.000    0.075    0.000 {built-in method marshal.loads}
+     2000    0.070    0.000    0.098    0.000 /home/jelmer/anaconda3/envs/torch3/lib/python3.6/site-packages/torch_geometric/data/in_memory_dataset.py:93(get)
+       88    0.060    0.001    0.060    0.001 {method 'partition' of 'numpy.ndarray' objects}
+      256    0.053    0.000   68.180    0.266 /home/jelmer/anaconda3/envs/torch3/lib/python3.6/site-packages/torch_cluster/knn.py:80(knn_graph)
+     2816    0.051    0.000    0.051    0.000 {method 'mul_' of 'torch._C._TensorBase' objects}
+  134/117    0.045    0.000    0.070    0.001 {built-in method _imp.create_dynamic}
+
