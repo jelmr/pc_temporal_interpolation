@@ -6,7 +6,7 @@ The whole process consist of the following steps:
 4. Upsampling + snap
 
 
-## 1. Preprocess training data == 
+## 1. Preprocess training data
 
 Navigate to the `torch` folder.
 
