@@ -61,3 +61,47 @@ return [
 ```
 
 Once this is done, you can run the command `python src/train.py -c config.json`, which should preprocess the data and store the result in `data/SyntheticAdvanced/processed`.
+
+Lastly, edit the paths in `/scripts/split_dataset.py` and then run this script to split `training_dataset.pickle` into a training- and test set.
+
+
+## 2. Training 
+Navigate to the `flownet` folder.
+
+The dataset used for training is defined in `synthetic_dataset.py`, you should edit the two paths in the constructor to point to the two files you created with the `split_dataset.py` script.
+
+```
+if self.train:
+    self.root = '/path/to/training_dataset_train.pickle'
+else:
+    self.root = '/path/to/training_dataset_test.pickle'
+```
+
+The training phase consists of two parts (see Thesis Section 3.4).
+
+Training the first part:
+```
+python train.py
+```
+
+This starts training and by default will write logs and the trained weights to `/log_train` (this can be modified with the `--log_dir` flag).
+
+Training the second part:
+```
+python train_part2.py
+```
+
+This takes the weights from the first part of training (assumed to be in `log_train`, if you stored them elsewhere, pass that directory using the `--model-path` flag). This script will perform the second part of training and output logs and weights to `log_train__phase2` (can be modified using the `--log_dir` flag, again).
+
+You can monitor training using Tensorboard:
+```
+tensorboard --logdir <path_to_the_logdir> --port <port_nr>
+```
+This starts an HTTP server on <port_nr>.
+
+## 3. Inference
+
+
+
+## 4. Upsampling + snap
+
