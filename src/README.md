@@ -4,6 +4,8 @@ The whole process consist of the following steps:
 2. Training 
 3. Inference
 4. Upsampling + snap
+5. Viewing results
+6. Evaluation
 
 
 ## 1. Preprocess training data
@@ -66,7 +68,7 @@ Lastly, edit the paths in `/scripts/split_dataset.py` and then run this script t
 
 
 ## 2. Training 
-Navigate to the `flownet` folder.
+Navigate to the `flownet3d` folder.
 
 The dataset used for training is defined in `synthetic_dataset.py`, you should edit the two paths in the constructor to point to the two files you created with the `split_dataset.py` script.
 
@@ -100,8 +102,53 @@ tensorboard --logdir <path_to_the_logdir> --port <port_nr>
 This starts an HTTP server on <port_nr>.
 
 ## 3. Inference
+To perform the interpolation, we'll need both a low resolution (lr) version of each frame (consisting of 2048 points), and a high resolution version (hr), consisting of an arbitrary number of points. In this step we will use the LR version as input to the network, which will then output a LR point cloud with estimated scene flow. In the next step we will upsample this result.
 
+```
+python interpolate_full.py --in_dir /path/to/lr_input_dpc --in_dpc /path/to/lr_input_dpc/frames.dpc --out_dir /path/to/lr_output_dpc --out_dpc /path/to/lr_output_dpc/frames.dpc
+```
 
+Additionally, you should use the `--model_path` flag you didn't use the default directory (`log_train_phase2`) for `train_part2.py`.
+
+This will output the interpolated point clouds to the provided output directory.
 
 ## 4. Upsampling + snap
+In this step we will upsample the LR point cloud from the previous snap, and apply point snapping to make the interpolation result smoother.
+
+```
+python upsample_and_snap.py /path/to/lr_input_dpc /path/to/lr_input_dpc/frames.dpc /path/to/hr_input_dpc /path/to/hr_input_dpc/frames.dpc /path/to/output_dpc
+```
+
+[There is also a `batch_upsample_and_snap.py` script, that will automatically run this for multiple dpcs, but you might have to modifiy it a bit for your needs.]
+
+Here:
+- `lr_input_dpc` is the output created by `interpolate_full.py` in the previous step
+- `hr_input_dpc` is the high resolution dpc corresponding to the low resolution point cloud you used as input for `interpolate_full.py`.
+- `output_dpc` is where the result will be stored.
+
+The output of this step is a high resolution point cloud, with an estimated sceneflow for each point. This estimated sceneflow can be used in the next step to render the interpolation.
+
+## 5. Viewing results
+In the `scripts` folder is a `dynamic_point_cloud_renderer.py` which you can use to render the interpolation.
+
+```
+python dynamic_point_cloud_renderer.py /path/to/dpc /path/to/dpc/frames.dpc
+```
+
+Run with the `--help` flag to see all options. Most important options are `--fps n`, to set the frames per second before interpolation, and `--interpolate n`, to interpolate `n` frames between each frame pair (based on the estimated sceneflow).
+
+Press `q` to start the animation, use `-` and `=` to increase the point size.
+
+
+## 6. Evaluation
+
+The `calculate_objective_metrics.py` script can be used to calculate objective metrics for an interpolation result.
+
+It takes:
+- `--in_dir`: The directory containing the interpolation result (expected to have a `frames.dpc` file in it)
+- `--gt_dir`: The directory containing the ground truth. This directory should contain a `sceneflow` directory, which contains a DPC with sceneflow, and a `normals` directory, which contains a DPC with normals.
+- `out`: Directory where to write the results.
+
+
+
 
