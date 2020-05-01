@@ -147,7 +147,7 @@ The `calculate_objective_metrics.py` script can be used to calculate objective m
 It takes:
 - `--in_dir`: The directory containing the interpolation result (expected to have a `frames.dpc` file in it)
 - `--gt_dir`: The directory containing the ground truth. This directory should contain a `sceneflow` directory, which contains a DPC with sceneflow, and a `normals` directory, which contains a DPC with normals.
-- `out`: Directory where to write the results.
+- `--out`: Directory where to write the results.
 
 
 

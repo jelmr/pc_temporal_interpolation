@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "train.py", line 8, in <module>
+    import tensorflow as tf
+  File "/home/jelmer/anaconda3/lib/python3.7/site-packages/tensorflow/__init__.py", line 24, in <module>
+    from tensorflow.python import pywrap_tensorflow  # pylint: disable=unused-import
+  File "/home/jelmer/anaconda3/lib/python3.7/site-packages/tensorflow/python/__init__.py", line 52, in <module>
+    from tensorflow.core.framework.graph_pb2 import *
+  File "/home/jelmer/anaconda3/lib/python3.7/site-packages/tensorflow/core/framework/graph_pb2.py", line 6, in <module>
+    from google.protobuf import descriptor as _descriptor
+  File "/home/jelmer/anaconda3/lib/python3.7/site-packages/google/protobuf/descriptor.py", line 47, in <module>
+    from google.protobuf.pyext import _message
+ImportError: /home/jelmer/anaconda3/lib/python3.7/site-packages/google/protobuf/pyext/_message.cpython-37m-x86_64-linux-gnu.so: undefined symbol: _ZNK6google8protobuf10TextFormat17FieldValuePrinter9PrintBoolB5cxx11Eb
