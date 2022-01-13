@@ -1,9 +1,7 @@
 # Temporal Interpolation of Dynamic Point Clouds using Convolutional Neural Networks
 [Paper](https://github.com/jelmr/pc_temporal_interpolation/blob/master/thesis.pdf)
 
-Code: Coming soon.
-
-Data set: Coming soon.
+[Code](https://github.com/jelmr/pc_temporal_interpolation/tree/master/src)
 
 # Visual Results
 [Interpolated sequence - Malcolm Samba](https://drive.google.com/open?id=1m3yWUlHyAYU52kWlxmz3BjUIhA5KAnSj)
